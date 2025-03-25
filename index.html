@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explorando o Módulo console no Node.js</title>
+  <link rel="icon" href="icon.png" type="image/x-icon">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <div class="logo">
+        <img src="logo.png" alt="Logo IFC">
+      </div>
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Pesquisar no artigo..." onkeyup="searchAndScroll()">
+      </div>
+      <div class="authors">
+        <a href="https://github.com/kyo5hy" target="_blank">Kyoshy</a>
+        <a href="https://github.com/aluno2" target="_blank">Ygor</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="intro" class="fade-in">
+      <h2>O que é o Módulo <code>console</code>?</h2>
+      <p>Imagine que você está desenvolvendo um projeto em Node.js e precisa entender o que está acontecendo no seu programa — seja para exibir mensagens, rastrear erros ou medir o tempo de execução. É aí que o módulo <code>console</code> entra em cena, como um fiel companheiro para desenvolvedores. Neste guia, vamos mergulhar fundo no <code>console</code> do Node.js, explorando cada método e construtor, com explicações detalhadas e exemplos práticos. Prepare-se para dominar essa ferramenta essencial!</p>
+      <p>O módulo <code>console</code> no Node.js é como o canivete suíço da depuração. Ele oferece uma coleção de métodos para exibir mensagens no terminal (ou em outros destinos, como arquivos) e é parecido com o <code>console</code> que você já conhece dos navegadores, mas adaptado ao ambiente do servidor. Disponível globalmente, você não precisa importar nada para começar a usá-lo — basta chamar <code>console.log("Olá!")</code> e pronto.</p>
+      <p>Mas há mais! O <code>console</code> também é uma classe que você pode personalizar, permitindo redirecionar saídas para lugares específicos. Vamos explorar isso começando pelos construtores.</p>
+    </section>
+
+    <section id="construtores" class="fade-in">
+      <h2>Criando Seu Próprio Console: Os Construtores</h2>
+
+      <h3><code>new Console(stdout[, stderr][, ignoreErrors])</code></h3>
+      <p><strong>O que faz:</strong> Cria uma instância personalizada do <code>Console</code>, definindo onde as mensagens normais (<code>stdout</code>) e os erros (<code>stderr</code>) serão exibidos. O parâmetro <code>ignoreErrors</code> decide se erros de escrita são ignorados (padrão: <code>true</code>).</p>
+      <p><strong>Por que usar?</strong> Perfeito para quando você quer logs em arquivos ou fluxos personalizados, em vez do terminal padrão.</p>
+      <p><strong>Como funciona:</strong> Você passa fluxos de escrita (como arquivos ou o terminal) e usa a instância como o <code>console</code> global.</p>
+      <pre><code class="language-javascript">
+const fs = require("node:fs");
+const { Console } = require("node:console");
+
+const output = fs.createWriteStream("./app.log");
+const errorOutput = fs.createWriteStream("./error.log");
+
+const myConsole = new Console(output, errorOutput);
+
+myConsole.log("Aplicação iniciada");
+myConsole.error("Erro crítico!");
+      </code></pre>
+
+      <h3><code>new Console(options)</code></h3>
+      <p><strong>O que faz:</strong> Uma versão mais detalhada do construtor, aceitando um objeto com opções como <code>stdout</code>, <code>stderr</code>, <code>colorMode</code>, e mais.</p>
+      <p><strong>Por que usar?</strong> Dá controle total sobre formatação (cores, indentação) e comportamento.</p>
+      <p><strong>Como funciona:</strong> Passe um objeto com as configurações desejadas e use a instância para logs personalizados.</p>
+      <pre><code class="language-javascript">
+const fs = require("node:fs");
+const { Console } = require("node:console");
+
+const output = fs.createWriteStream("./custom.log");
+const logger = new Console({
+  stdout: output,
+  stderr: output,
+  colorMode: false,
+  groupIndentation: 4
+});
+
+logger.group("Configuração");
+logger.log("Sistema pronto");
+logger.groupEnd();
+      </code></pre>
+    </section>
+
+    <section id="metodos" class="fade-in">
+      <h2>Os Métodos do <code>console</code>: Sua Caixa de Ferramentas</h2>
+      <p>Agora que entendemos como criar um <code>Console</code>, vamos explorar os métodos disponíveis — tanto no <code>console</code> global quanto nas instâncias personalizadas. Cada um tem um propósito único, e vou mostrar como usá-los com exemplos reais.</p>
+
+      <h3><code>console.assert(value[, ...message])</code></h3>
+      <p><strong>O que faz:</strong> Testa se <code>value</code> é verdadeiro. Se for falso, exibe uma mensagem de erro no <code>stderr</code>.</p>
+      <p><strong>Por que usar?</strong> Ideal para verificar condições durante o desenvolvimento.</p>
+      <pre><code class="language-javascript">
+const idadeMinima = 18;
+let idadeUsuario = 16;
+
+console.assert(idadeUsuario >= idadeMinima, "Usuário muito jovem: %d anos", idadeUsuario);
+console.assert(true, "Isso não aparece");
+      </code></pre>
+
+      <h3><code>console.clear()</code></h3>
+      <p><strong>O que faz:</strong> Limpa o terminal, mas só funciona se <code>stdout</code> for um TTY (terminal interativo).</p>
+      <p><strong>Por que usar?</strong> Para deixar o terminal limpo e organizado.</p>
+      <pre><code class="language-javascript">
+console.log("Texto antigo");
+console.clear();
+console.log("Texto novo");
+      </code></pre>
+
+      <h3><code>console.count([label])</code></h3>
+      <p><strong>O que faz:</strong> Conta quantas vezes foi chamado com um rótulo específico (padrão: <code>"default"</code>).</p>
+      <p><strong>Por que usar?</strong> Útil para rastrear repetições, como iterações em loops.</p>
+      <pre><code class="language-javascript">
+for (let i = 0; i < 3; i++) {
+  console.count("passo");
+}
+      </code></pre>
+
+      <h3><code>console.countReset([label])</code></h3>
+      <p><strong>O que faz:</strong> Zera o contador de um rótulo específico.</p>
+      <p><strong>Por que usar?</strong> Para reiniciar a contagem e reutilizar o rótulo.</p>
+      <pre><code class="language-javascript">
+console.count("evento");
+console.count("evento");
+console.countReset("evento");
+console.count("evento");
+      </code></pre>
+
+      <h3><code>console.debug(data[, ...args])</code></h3>
+      <p><strong>O que faz:</strong> Um alias para <code>console.log()</code>, mas com uma vibe de depuração.</p>
+      <p><strong>Por que usar?</strong> Para destacar mensagens de debug no código.</p>
+      <pre><code class="language-javascript">
+console.debug("Debugging valor: %d", 42);
+      </code></pre>
+
+      <h3><code>console.dir(obj[, options])</code></h3>
+      <p><strong>O que faz:</strong> Exibe uma representação detalhada de um objeto, usando <code>util.inspect()</code>.</p>
+      <p><strong>Por que usar?</strong> Para inspecionar objetos complexos de forma legível.</p>
+      <pre><code class="language-javascript">
+const usuario = { nome: "Ana", detalhes: { idade: 25 } };
+console.dir(usuario, { depth: 1, colors: true });
+      </code></pre>
+
+      <h3><code>console.dirxml(...data)</code></h3>
+      <p><strong>O que faz:</strong> Passa os argumentos para <code>console.log()</code> — não formata como XML, apesar do nome.</p>
+      <p><strong>Por que usar?</strong> Uso genérico, mas sem função especial no Node.js.</p>
+      <pre><code class="language-javascript">
+console.dirxml("Dado", 123);
+      </code></pre>
+
+      <h3><code>console.error([data][, ...args])</code></h3>
+      <p><strong>O que faz:</strong> Escreve mensagens de erro no <code>stderr</code>.</p>
+      <p><strong>Por que usar?</strong> Para reportar problemas ou falhas.</p>
+      <pre><code class="language-javascript">
+console.error("Erro detectado: %s", "falha no servidor");
+      </code></pre>
+
+      <h3><code>console.group([...label])</code></h3>
+      <p><strong>O que faz:</strong> Aumenta a indentação das próximas linhas, com rótulos opcionais.</p>
+      <p><strong>Por que usar?</strong> Organizar saídas em blocos hierárquicos.</p>
+      <pre><code class="language-javascript">
+console.group("Processo");
+console.log("Etapa 1");
+console.group("Subdetalhes");
+console.log("Item A");
+console.groupEnd();
+console.groupEnd();
+      </code></pre>
+
+      <h3><code>console.groupCollapsed()</code></h3>
+      <p><strong>O que faz:</strong> Igual a <code>group()</code>, mas no Node.js não colapsa (diferente de navegadores).</p>
+      <p><strong>Por que usar?</strong> Compatibilidade com código de navegadores.</p>
+      <pre><code class="language-javascript">
+console.groupCollapsed("Seção");
+console.log("Dentro");
+console.groupEnd();
+      </code></pre>
+
+      <h3><code>console.groupEnd()</code></h3>
+      <p><strong>O que faz:</strong> Reduz a indentação atual.</p>
+      <p><strong>Por que usar?</strong> Finalizar um grupo indentado.</p>
+      <p><strong>Exemplo:</strong> Veja <code>console.group()</code> acima.</p>
+
+      <h3><code>console.info([data][, ...args])</code></h3>
+      <p><strong>O que faz:</strong> Alias para <code>console.log()</code>, com tom informativo.</p>
+      <p><strong>Por que usar?</strong> Para mensagens informativas gerais.</p>
+      <pre><code class="language-javascript">
+console.info("Sistema online desde: %s", new Date());
+      </code></pre>
+
+      <h3><code>console.log([data][, ...args])</code></h3>
+      <p><strong>O que faz:</strong> O clássico — escreve mensagens no <code>stdout</code> com formatação.</p>
+      <p><strong>Por que usar?</strong> Exibir resultados ou logs gerais.</p>
+      <pre><code class="language-javascript">
+console.log("Nome: %s, Pontos: %d", "João", 100);
+      </code></pre>
+
+      <h3><code>console.table(tabularData[, properties])</code></h3>
+      <p><strong>O que faz:</strong> Exibe dados em formato de tabela.</p>
+      <p><strong>Por que usar?</strong> Visualizar dados estruturados de forma clara.</p>
+      <pre><code class="language-javascript">
+const equipe = [
+  { nome: "Lucas", cargo: "Dev" },
+  { nome: "Clara", cargo: "Designer" }
+];
+console.table(equipe);
+      </code></pre>
+
+      <h3><code>console.time([label])</code></h3>
+      <p><strong>O que faz:</strong> Inicia um temporizador para medir o tempo.</p>
+      <p><strong>Por que usar?</strong> Analisar desempenho de trechos de código.</p>
+      <pre><code class="language-javascript">
+console.time("calculo");
+for (let i = 0; i < 1000000; i++) {}
+console.timeEnd("calculo");
+      </code></pre>
+
+      <h3><code>console.timeEnd([label])</code></h3>
+      <p><strong>O que faz:</strong> Para o temporizador e exibe o tempo decorrido.</p>
+      <p><strong>Por que usar?</strong> Finalizar a medição iniciada com <code>time</code>.</p>
+      <p><strong>Exemplo:</strong> Veja <code>console.time()</code> acima.</p>
+
+      <h3><code>console.timeLog([label][, ...data])</code></h3>
+      <p><strong>O que faz:</strong> Mostra o tempo parcial de um temporizador ativo.</p>
+      <p><strong>Por que usar?</strong> Monitorar progresso em operações longas.</p>
+      <pre><code class="language-javascript">
+console.time("espera");
+setTimeout(() => {
+  console.timeLog("espera", "Passou metade");
+}, 1000);
+      </code></pre>
+
+      <h3><code>console.trace([message][, ...args])</code></h3>
+      <p><strong>O que faz:</strong> Exibe o rastreamento da pilha (stack trace).</p>
+      <p><strong>Por que usar?</strong> Depurar, mostrando o caminho do código.</p>
+      <pre><code class="language-javascript">
+function testar() {
+  console.trace("Onde estou?");
+}
+testar();
+      </code></pre>
+
+      <h3><code>console.warn([data][, ...args])</code></h3>
+      <p><strong>O que faz:</strong> Alias para <code>console.error()</code>, com tom de aviso.</p>
+      <p><strong>Por que usar?</strong> Alertar sobre situações potencialmente problemáticas.</p>
+      <pre><code class="language-javascript">
+console.warn("Atenção: %s está quase cheio", "disco");
+      </code></pre>
+    </section>
+
+    <section id="inspector" class="fade-in">
+      <h2>Métodos Apenas no Inspector: Depuração Avançada</h2>
+      <p>Esses métodos só funcionam com o flag <code>--inspect</code>, integrando-se ao Chrome DevTools.</p>
+
+      <h3><code>console.profile([label])</code></h3>
+      <p><strong>O que faz:</strong> Inicia um perfil de CPU para análise de desempenho.</p>
+      <p><strong>Por que usar?</strong> Identificar gargalos no código.</p>
+      <pre><code class="language-javascript">
+console.profile("Loop Pesado");
+for (let i = 0; i < 100000; i++) {}
+console.profileEnd("Loop Pesado");
+      </code></pre>
+
+      <h3><code>console.profileEnd([label])</code></h3>
+      <p><strong>O que faz:</strong> Para o perfil de CPU.</p>
+      <p><strong>Por que usar?</strong> Finalizar a análise iniciada com <code>profile</code>.</p>
+      <p><strong>Exemplo:</strong> Veja <code>console.profile()</code> acima.</p>
+
+      <h3><code>console.timeStamp([label])</code></h3>
+      <p><strong>O que faz:</strong> Adiciona um marco ao Timeline do inspector.</p>
+      <p><strong>Por que usar?</strong> Marcar eventos para análise temporal.</p>
+      <pre><code class="language-javascript">
+console.timeStamp("Início da tarefa");
+      </code></pre>
+    </section>
+
+    <section id="conclusao" class="fade-in">
+      <h2>Conclusão</h2>
+      <p>O módulo <code>console</code> do Node.js é mais do que apenas um <code>log</code> básico — é uma caixa de ferramentas completa para depuração e logging. Desde exibir mensagens simples até criar logs personalizados em arquivos, medir desempenho ou rastrear erros, ele tem tudo o que você precisa. Experimente os exemplos, brinque com os métodos e veja como eles podem facilitar sua vida como desenvolvedor. Qual é o seu favorito? Me conte nos comentários (ou imagine que estamos conversando)!</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 - Guia Node.js | Criado em Santa Catarina, Brasil (UTC-3)</p>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

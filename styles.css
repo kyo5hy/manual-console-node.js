@@ -1,0 +1,265 @@
+/* Estilos gerais para tudo */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  line-height: 1.6;
+  color: #333;
+  background: #fff;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Estilos do cabeçalho */
+header {
+  background: #fff;
+  padding: 15px 0;
+  border-bottom: 1px solid #e0e0e0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.logo img {
+  height: 40px;
+  transition: transform 0.3s ease;
+}
+
+.logo img:hover {
+  transform: scale(1.1); /* Aumenta um pouco ao passar o mouse */
+}
+
+.search-bar {
+  flex: 1;
+  max-width: 400px;
+  margin: 0 10px;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  font-size: 0.9em;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.search-bar input:focus {
+  border-color: #3498db; /* Muda a borda ao clicar */
+}
+
+.authors {
+  display: flex;
+  gap: 15px;
+}
+
+.authors a {
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9em;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.authors a:hover {
+  color: #3498db;
+  transform: translateY(-2px); /* Levanta um pouco ao passar o mouse */
+}
+
+/* Estilos do conteúdo principal */
+main.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 15px;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 100vh;
+}
+
+section {
+  margin-bottom: 30px;
+  padding: 15px;
+  width: 100%;
+  display: block;
+}
+
+h2 {
+  font-size: 1.8em;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #111;
+}
+
+h3 {
+  font-size: 1.4em;
+  font-weight: 500;
+  margin: 20px 0 10px;
+  color: #222;
+}
+
+p {
+  margin-bottom: 15px;
+  font-size: 1em;
+  color: #444;
+}
+
+pre {
+  background: #282c34;
+  padding: 15px;
+  border-radius: 8px;
+  overflow-x: auto;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+button.copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 6px 12px;
+  background: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.8em;
+}
+
+/* Estilos do rodapé */
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #777;
+  border-top: 1px solid #e0e0e0;
+  font-size: 1em;
+  width: 100%;
+}
+
+/* Ajustes para diferentes tamanhos de tela */
+
+/* Tablets (até 768px) */
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 5px;
+  }
+
+  .search-bar {
+    width: 100%;
+    max-width: none;
+    margin: 5px 0;
+  }
+
+  .authors {
+    justify-content: center;
+  }
+
+  main.container {
+    padding: 15px 10px;
+  }
+
+  section {
+    padding: 10px;
+  }
+
+  h2 {
+    font-size: 1.6em;
+  }
+
+  h3 {
+    font-size: 1.2em;
+  }
+
+  p {
+    font-size: 0.95em;
+  }
+
+  pre {
+    padding: 12px;
+  }
+
+  button.copy-btn {
+    padding: 5px 10px;
+    font-size: 0.7em;
+  }
+
+  footer {
+    padding: 15px;
+  }
+}
+
+/* Celulares (até 480px) */
+@media (max-width: 480px) {
+  .logo img {
+    height: 30px;
+  }
+
+  .header-content {
+    padding: 5px;
+  }
+
+  .search-bar input {
+    padding: 6px 10px;
+    font-size: 0.8em;
+  }
+
+  .authors {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .authors a {
+    font-size: 0.8em;
+  }
+
+  main.container {
+    padding: 10px 5px;
+  }
+
+  section {
+    padding: 8px;
+  }
+
+  h2 {
+    font-size: 1.4em;
+  }
+
+  h3 {
+    font-size: 1.1em;
+  }
+
+  p {
+    font-size: 0.9em;
+  }
+
+  pre {
+    padding: 10px;
+  }
+
+  button.copy-btn {
+    top: 5px;
+    right: 5px;
+    padding: 4px 8px;
+    font-size: 0.6em;
+  }
+
+  footer {
+    padding: 10px;
+  }
+}

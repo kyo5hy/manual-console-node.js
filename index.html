@@ -21,7 +21,7 @@
       </div>
       <div class="authors">
         <a href="https://github.com/kyo5hy" target="_blank">Kyoshy</a>
-        <a href="https://github.com/aluno2" target="_blank">Ygor</a>
+        <a href="https://github.com/y0or" target="_blank">y0or</a>
       </div>
     </div>
   </header>
@@ -42,16 +42,23 @@
       <p><strong>Por que usar?</strong> Perfeito para quando você quer logs em arquivos ou fluxos personalizados, em vez do terminal padrão.</p>
       <p><strong>Como funciona:</strong> Você passa fluxos de escrita (como arquivos ou o terminal) e usa a instância como o <code>console</code> global.</p>
       <pre><code class="language-javascript">
-const fs = require("node:fs");
-const { Console } = require("node:console");
-
-const output = fs.createWriteStream("./app.log");
-const errorOutput = fs.createWriteStream("./error.log");
-
-const myConsole = new Console(output, errorOutput);
-
-myConsole.log("Aplicação iniciada");
-myConsole.error("Erro crítico!");
+            const fs = require("node:fs");
+            const { Console } = require("node:console");
+            
+            // Criação de fluxos de escrita para os arquivos app.log e error.log
+            const output = fs.createWriteStream("./app.log");   // Fluxo para logs normais
+            const errorOutput = fs.createWriteStream("./error.log"); // Fluxo para logs de erro
+            
+            // Criando uma instância do Console personalizada para redirecionar os logs
+            const myConsole = new Console(output, errorOutput);
+            
+            // Logando mensagens nos arquivos de log
+            myConsole.log("Aplicação iniciada");  // Grava no arquivo app.log
+            myConsole.error("Erro crítico!");    // Grava no arquivo error.log
+            
+            // Impressão das mesmas mensagens no terminal (console)
+            console.log("Aplicação iniciada - console");  // Exibe no terminal
+            console.error("Erro crítico! - console");    // Exibe no terminal como erro
       </code></pre>
 
       <h3><code>new Console(options)</code></h3>
@@ -59,20 +66,32 @@ myConsole.error("Erro crítico!");
       <p><strong>Por que usar?</strong> Dá controle total sobre formatação (cores, indentação) e comportamento.</p>
       <p><strong>Como funciona:</strong> Passe um objeto com as configurações desejadas e use a instância para logs personalizados.</p>
       <pre><code class="language-javascript">
-const fs = require("node:fs");
-const { Console } = require("node:console");
-
-const output = fs.createWriteStream("./custom.log");
-const logger = new Console({
-  stdout: output,
-  stderr: output,
-  colorMode: false,
-  groupIndentation: 4
-});
-
-logger.group("Configuração");
-logger.log("Sistema pronto");
-logger.groupEnd();
+            const fs = require("node:fs");
+            const { Console } = require("node:console");
+            
+            // Cria um fluxo de escrita para o arquivo custom.log
+            const output = fs.createWriteStream("./custom.log");
+            
+            // Cria uma instância de Console personalizada para gravar no arquivo custom.log
+            const logger = new Console({
+              stdout: output,   // Saída normal vai para o arquivo
+              stderr: output,   // Erros também vão para o arquivo
+              colorMode: false,  // Desativa a coloração no arquivo (não afeta o conteúdo)
+              groupIndentation: 4 // Indentação de 4 espaços para o conteúdo do grupo (não afeta o arquivo, apenas a visualização)
+            });
+            
+            // Inicia um grupo de logs chamado "Configuração"
+            logger.group("Configuração");
+            
+            // Registra a mensagem "Sistema pronto" dentro do grupo no arquivo
+            logger.log("Sistema pronto");
+            
+            // Registra a mesma mensagem "Configuração\n    Sistema pronto" no terminal, mas sem o grupo (apenas eco no terminal)
+            console.log("Configuração\n    Sistema pronto"); // Eco no terminal
+            
+            // Finaliza o grupo de logs no arquivo
+            logger.groupEnd();
+            
       </code></pre>
     </section>
 

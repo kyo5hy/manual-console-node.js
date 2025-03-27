@@ -16,6 +16,15 @@ O projeto foi feito com:
 - **CSS**: Para deixar a página bonita e organizada, inclusive em celulares.
 - **JavaScript**: Para adicionar funcionalidades como a busca e o botão de copiar.
 
+## Git
+
+### 1. Download Git
+Você deve baixar o Git para poder clonar o repositório
+
+```bash
+https://git-scm.com/downloads/win
+```
+
 ## Como Usar
 
 ### 1. Clonar o Repositório

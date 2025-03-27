@@ -103,20 +103,26 @@
       <p><strong>O que faz:</strong> Testa se <code>value</code> é verdadeiro. Se for falso, exibe uma mensagem de erro no <code>stderr</code>.</p>
       <p><strong>Por que usar?</strong> Ideal para verificar condições durante o desenvolvimento.</p>
       <pre><code class="language-javascript">
-const idadeMinima = 18;
-let idadeUsuario = 16;
+            const idadeMinima = 18;            // Definindo a idade mínima permitida
+            let idadeUsuario = 16;             // Idade do usuário
+            
+            // Verifica se a idade do usuário é maior ou igual à idade mínima
+            // Se a condição for falsa (como é o caso aqui), a mensagem de erro será exibida
+            console.assert(idadeUsuario >= idadeMinima, `Usuário muito jovem: ${idadeUsuario} anos`);
+            
+            // A condição é verdadeira, então a mensagem não aparece
+            console.assert(true, "Isso não aparece");
 
-console.assert(idadeUsuario >= idadeMinima, "Usuário muito jovem: %d anos", idadeUsuario);
-console.assert(true, "Isso não aparece");
       </code></pre>
 
       <h3><code>console.clear()</code></h3>
       <p><strong>O que faz:</strong> Limpa o terminal, mas só funciona se <code>stdout</code> for um TTY (terminal interativo).</p>
       <p><strong>Por que usar?</strong> Para deixar o terminal limpo e organizado.</p>
       <pre><code class="language-javascript">
-console.log("Texto antigo");
-console.clear();
-console.log("Texto novo");
+            console.log("Texto antigo");  // Exibe "Texto antigo"
+            console.clear();              // Limpa o console
+            console.log("Texto novo");    // Exibe "Texto novo"          
+
       </code></pre>
 
       <h3><code>console.count([label])</code></h3>
@@ -124,68 +130,91 @@ console.log("Texto novo");
       <p><strong>Por que usar?</strong> Útil para rastrear repetições, como iterações em loops.</p>
       <pre><code class="language-javascript">
 for (let i = 0; i < 3; i++) {
-  console.count("passo");
-}
+    // Conta quantas vezes a string "passo" foi chamada
+    console.count("passo");
+  }
+  
       </code></pre>
 
       <h3><code>console.countReset([label])</code></h3>
       <p><strong>O que faz:</strong> Zera o contador de um rótulo específico.</p>
       <p><strong>Por que usar?</strong> Para reiniciar a contagem e reutilizar o rótulo.</p>
       <pre><code class="language-javascript">
-console.count("evento");
-console.count("evento");
-console.countReset("evento");
-console.count("evento");
+            console.count("evento");  // Exibe: evento: 1
+            console.count("evento");  // Exibe: evento: 2
+            console.countReset("evento");  // Reseta a contagem para o "evento"
+            console.count("evento");  // Exibe: evento: 1 (contagem reiniciada)
+            
       </code></pre>
 
       <h3><code>console.debug(data[, ...args])</code></h3>
       <p><strong>O que faz:</strong> Um alias para <code>console.log()</code>, mas com uma vibe de depuração.</p>
       <p><strong>Por que usar?</strong> Para destacar mensagens de debug no código.</p>
       <pre><code class="language-javascript">
-console.debug("Debugging valor: %d", 42);
+            // Usa o método console.debug para imprimir uma mensagem de depuração no console
+            console.debug("Debugging valor: %d", 42);  // Exibe: Debugging valor: 42
+            
       </code></pre>
 
       <h3><code>console.dir(obj[, options])</code></h3>
       <p><strong>O que faz:</strong> Exibe uma representação detalhada de um objeto, usando <code>util.inspect()</code>.</p>
       <p><strong>Por que usar?</strong> Para inspecionar objetos complexos de forma legível.</p>
       <pre><code class="language-javascript">
-const usuario = { nome: "Ana", detalhes: { idade: 25 } };
-console.dir(usuario, { depth: 1, colors: true });
+            const usuario = { nome: "Ana", detalhes: { idade: 25 } };
+
+            // Exibe o objeto no console com profundidade de 1 e cores
+            console.dir(usuario, { depth: 1, colors: true });
+            
       </code></pre>
 
       <h3><code>console.dirxml(...data)</code></h3>
       <p><strong>O que faz:</strong> Passa os argumentos para <code>console.log()</code> — não formata como XML, apesar do nome.</p>
       <p><strong>Por que usar?</strong> Uso genérico, mas sem função especial no Node.js.</p>
       <pre><code class="language-javascript">
-console.dirxml("Dado", 123);
+            // Tenta usar console.dirxml com parâmetros não convencionais
+            console.dirxml("Dado", 123);
+            
+            // Isso vai funcionar no VS Code, mas não é o comportamento padrão da função console.dirxml.
+            // Normalmente, console.dirxml espera um único argumento, como um objeto DOM ou XML.
+            // No VS Code (usando Node.js), ele pode simplesmente imprimir os valores passados como uma chamada a console.log().
+            
       </code></pre>
 
       <h3><code>console.error([data][, ...args])</code></h3>
       <p><strong>O que faz:</strong> Escreve mensagens de erro no <code>stderr</code>.</p>
       <p><strong>Por que usar?</strong> Para reportar problemas ou falhas.</p>
       <pre><code class="language-javascript">
-console.error("Erro detectado: %s", "falha no servidor");
+            // Exibe uma mensagem de erro com substituição de string
+            console.error("Erro detectado: %s", "falha no servidor");
+            
+            // Isso irá imprimir a mensagem de erro:
+            // "Erro detectado: falha no servidor" no console, geralmente com formatação destacada de erro (em vermelho).
+            
       </code></pre>
 
       <h3><code>console.group([...label])</code></h3>
       <p><strong>O que faz:</strong> Aumenta a indentação das próximas linhas, com rótulos opcionais.</p>
       <p><strong>Por que usar?</strong> Organizar saídas em blocos hierárquicos.</p>
       <pre><code class="language-javascript">
-console.group("Processo");
-console.log("Etapa 1");
-console.group("Subdetalhes");
-console.log("Item A");
-console.groupEnd();
-console.groupEnd();
+            console.group("Processo"); // Inicia um novo grupo chamado "Processo"
+            console.log("Etapa 1");     // Exibe "Etapa 1" dentro do grupo "Processo"
+            
+            console.group("Subdetalhes"); // Inicia um subgrupo chamado "Subdetalhes" dentro do grupo "Processo"
+            console.log("Item A");        // Exibe "Item A" dentro do subgrupo "Subdetalhes"
+            
+            console.groupEnd(); // Encerra o subgrupo "Subdetalhes"
+            console.groupEnd(); // Encerra o grupo "Processo"
+            
       </code></pre>
 
       <h3><code>console.groupCollapsed()</code></h3>
       <p><strong>O que faz:</strong> Igual a <code>group()</code>, mas no Node.js não colapsa (diferente de navegadores).</p>
       <p><strong>Por que usar?</strong> Compatibilidade com código de navegadores.</p>
       <pre><code class="language-javascript">
-console.groupCollapsed("Seção");
-console.log("Dentro");
-console.groupEnd();
+            console.groupCollapsed("Seção"); // Cria um grupo chamado "Seção", mas ele começa colapsado
+            console.log("Dentro");            // Exibe a mensagem "Dentro" dentro do grupo "Seção"
+            console.groupEnd();               // Encerra o grupo "Seção"
+            
       </code></pre>
 
       <h3><code>console.groupEnd()</code></h3>
@@ -197,34 +226,51 @@ console.groupEnd();
       <p><strong>O que faz:</strong> Alias para <code>console.log()</code>, com tom informativo.</p>
       <p><strong>Por que usar?</strong> Para mensagens informativas gerais.</p>
       <pre><code class="language-javascript">
-console.info("Sistema online desde: %s", new Date());
+            // Exibe uma mensagem informativa no console, com a data atual
+            console.info("Sistema online desde: %s", new Date());
+            
       </code></pre>
 
       <h3><code>console.log([data][, ...args])</code></h3>
       <p><strong>O que faz:</strong> O clássico — escreve mensagens no <code>stdout</code> com formatação.</p>
       <p><strong>Por que usar?</strong> Exibir resultados ou logs gerais.</p>
       <pre><code class="language-javascript">
-console.log("Nome: %s, Pontos: %d", "João", 100);
+            // Exibe uma mensagem formatada no console com a substituição de marcadores
+            console.log("Nome: %s, Pontos: %d", "João", 100);
+            
       </code></pre>
 
       <h3><code>console.table(tabularData[, properties])</code></h3>
       <p><strong>O que faz:</strong> Exibe dados em formato de tabela.</p>
       <p><strong>Por que usar?</strong> Visualizar dados estruturados de forma clara.</p>
       <pre><code class="language-javascript">
-const equipe = [
-  { nome: "Lucas", cargo: "Dev" },
-  { nome: "Clara", cargo: "Designer" }
-];
-console.table(equipe);
+            const equipe = [
+            { nome: "Lucas", cargo: "Dev" },
+            { nome: "Clara", cargo: "Designer" }
+          ];
+          
+          // Exibe o array 'equipe' em formato tabular no console
+          console.table(equipe);
+          
       </code></pre>
 
       <h3><code>console.time([label])</code></h3>
       <p><strong>O que faz:</strong> Inicia um temporizador para medir o tempo.</p>
       <p><strong>Por que usar?</strong> Analisar desempenho de trechos de código.</p>
       <pre><code class="language-javascript">
-console.time("calculo");
-for (let i = 0; i < 1000000; i++) {}
-console.timeEnd("calculo");
+            // Inicia o cronômetro com o rótulo "calculo"
+            console.time("calculo");
+            
+            // Executa um laço de repetição (aqui só um loop simples)
+            for (let i = 0; i < 1000000; i++) {}
+            
+            // Encerra o cronômetro e exibe o tempo decorrido com o mesmo rótulo "calculo"
+            console.timeEnd("calculo");
+            
+            // Para **Node.js/VS Code**, use **console.time()** e **console.timeEnd()** para medir o tempo de execução, já que **console.timeStamp()** e **console.profile()** não funcionam da mesma maneira no terminal.
+            console.time("Loop Pesado");
+            for (let i = 0; i < 100000; i++) {}
+            console.timeEnd("Loop Pesado");
       </code></pre>
 
       <h3><code>console.timeEnd([label])</code></h3>
@@ -236,27 +282,36 @@ console.timeEnd("calculo");
       <p><strong>O que faz:</strong> Mostra o tempo parcial de um temporizador ativo.</p>
       <p><strong>Por que usar?</strong> Monitorar progresso em operações longas.</p>
       <pre><code class="language-javascript">
-console.time("espera");
-setTimeout(() => {
-  console.timeLog("espera", "Passou metade");
-}, 1000);
+            // Inicia o cronômetro com o rótulo "espera"
+            console.time("espera");
+            
+            // Define um temporizador que será executado após 1000 milissegundos (1 segundo)
+            setTimeout(() => {
+              // Registra o tempo até esse ponto, com a mensagem "Passou metade"
+              console.timeLog("espera", "Passou metade");
+            }, 1000);
+            
       </code></pre>
 
       <h3><code>console.trace([message][, ...args])</code></h3>
       <p><strong>O que faz:</strong> Exibe o rastreamento da pilha (stack trace).</p>
       <p><strong>Por que usar?</strong> Depurar, mostrando o caminho do código.</p>
       <pre><code class="language-javascript">
-function testar() {
-  console.trace("Onde estou?");
-}
-testar();
+            function testar() {
+                  console.trace("Onde estou?"); // Exibe o rastreamento de pilha
+                }
+                
+                testar(); // Chama a função testar
+                
       </code></pre>
 
       <h3><code>console.warn([data][, ...args])</code></h3>
       <p><strong>O que faz:</strong> Alias para <code>console.error()</code>, com tom de aviso.</p>
       <p><strong>Por que usar?</strong> Alertar sobre situações potencialmente problemáticas.</p>
       <pre><code class="language-javascript">
-console.warn("Atenção: %s está quase cheio", "disco");
+            // Exibe uma mensagem de alerta (warn) no console, destacando a atenção do usuário.
+            console.warn("Atenção: %s está quase cheio", "disco");  // Exibe: "Atenção: disco está quase cheio"
+            
       </code></pre>
     </section>
 
@@ -268,9 +323,12 @@ console.warn("Atenção: %s está quase cheio", "disco");
       <p><strong>O que faz:</strong> Inicia um perfil de CPU para análise de desempenho.</p>
       <p><strong>Por que usar?</strong> Identificar gargalos no código.</p>
       <pre><code class="language-javascript">
-console.profile("Loop Pesado");
-for (let i = 0; i < 100000; i++) {}
-console.profileEnd("Loop Pesado");
+            // **console.profile()**: Inicia o perfil de desempenho e coleta dados sobre a execução do código. Funciona apenas nas ferramentas de desenvolvedor do navegador.
+            console.profile("Loop Pesado");
+            
+            for (let i = 0; i < 100000; i++) {}
+            
+            console.profileEnd("Loop Pesado"); // Finaliza o perfil de desempenho
       </code></pre>
 
       <h3><code>console.profileEnd([label])</code></h3>
@@ -282,7 +340,8 @@ console.profileEnd("Loop Pesado");
       <p><strong>O que faz:</strong> Adiciona um marco ao Timeline do inspector.</p>
       <p><strong>Por que usar?</strong> Marcar eventos para análise temporal.</p>
       <pre><code class="language-javascript">
-console.timeStamp("Início da tarefa");
+            // **console.timeStamp()**: Marca um ponto específico no tempo. Funciona apenas nas ferramentas de desenvolvedor do navegador, como na aba "Performance" ou "Timeline".
+            console.timeStamp("Início da tarefa");
       </code></pre>
     </section>
 

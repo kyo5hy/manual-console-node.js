@@ -1,34 +1,38 @@
-# Guia do Módulo Console no Node.js
 
-Olá! Bem-vindo(a) ao nosso projeto! 😊  
-Somos programadores iniciante e criamos esse guia para aprender e compartilhar o que descobrimos sobre o **módulo console** do Node.js. Aqui você vai encontrar uma página web com explicações simples, exemplos práticos e um layout interativo para explorar os métodos do `console`.
+# Node.js Console Module Guide
 
-## Sobre o Projeto
+Hello! Welcome to our project! 😊  
+We are beginner programmers and created this guide to learn and share what we discovered about the **console module** in Node.js. Here, you’ll find a web page with simple explanations, practical examples, and an interactive layout to explore the `console` methods.
 
-Esse projeto é um guia sobre o módulo `console` do Node.js, uma ferramenta super útil para quem está começando a programar. Ele explica como usar o `console` para mostrar mensagens, encontrar erros e até medir o tempo de execução do código. A página tem:
+## About the Project
 
-- **Explicações detalhadas**: Cada método do `console` é explicado de forma simples, com exemplos.
-- **Códigos prontos**: Você pode copiar os exemplos e testar no seu Node.js.
-- **Interatividade**: A página tem uma barra de pesquisa e botões para copiar os códigos.
+This project is a guide on the `console` module in Node.js, a super useful tool for those starting to code. It explains how to use the `console` to display messages, find errors, and even measure code execution time. The page includes:
 
-O projeto foi feito com:
-- **HTML**: Para criar a estrutura da página.
-- **CSS**: Para deixar a página bonita e organizada, inclusive em celulares.
-- **JavaScript**: Para adicionar funcionalidades como a busca e o botão de copiar.
+- **Detailed Explanations**: Each `console` method is explained in a simple way, with examples.
+- **Ready-to-Use Code**: You can copy the examples and test them in your Node.js environment.
+- **Interactivity**: The page features a search bar and buttons to copy the code snippets.
+
+The project was built using:
+- **HTML**: To create the page structure.
+- **CSS**: To make the page look nice and organized, including on mobile devices.
+- **JavaScript**: To add features like the search functionality and the copy button.
 
 ## Git
 
 ### 1. Download Git
-Você deve baixar o Git para poder clonar o repositório
+You need to download Git to clone the repository.
 
 ```bash
 https://git-scm.com/downloads/win
 ```
 
-## Como Usar
+## How to Use
 
-### 1. Clonar o Repositório
-Primeiro, você precisa baixar os arquivos para o seu computador. Use o comando abaixo no terminal:
+### 1. Clone the Repository
+First, you need to download the files to your computer. Use the command below in your terminal:
 
 ```bash
-git clone https://github.com/seu-usuario/seu-repositorio.git
+git clone https://github.com/your-username/your-repository.git
+```
+
+---
